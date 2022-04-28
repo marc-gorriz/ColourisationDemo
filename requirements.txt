@@ -1,0 +1,8 @@
+numpy
+ffmpeg-python
+opencv-python
+Pillow
+torch>=1.7
+torchvision
+tqdm
+scikit-image
