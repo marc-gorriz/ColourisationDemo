@@ -19,9 +19,9 @@ def xcnet():
     return model
 
 def xcnet_color():
-    path = "/work/marcb/video-xcnet/experiments/imagenet_rgb/checkpoints/epoch:26-step:49915.pth"
+    url = "https://www.dropbox.com/s/9d16nso8vvl2yyj/xcnet_colour.pth?dl=1"
     model = XCNET_COLOR()
-    state_dict = torch.load(path, map_location='cpu')
+    state_dict = load_state_dict_from_url(url, map_location='cpu', progress=True)
     model.load_state_dict(state_dict["model_state_dict"])
     return model
 
