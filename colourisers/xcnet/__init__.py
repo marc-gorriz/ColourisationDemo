@@ -5,7 +5,7 @@ from torch.hub import load_state_dict_from_url
 
 from .xcnet import XCNET
 from .xcnet_color import XCNET_COLOR
-from .utils import Process
+from .utils import Process, show_image
 
 __all__ = ["xcnet", "xcnet_color", "Process", "ImageColorizer"]
 
@@ -33,17 +33,19 @@ class ImageColorizer:
         self.model = model.to(device)
         self.process = Process(shape)
         
-    def predict(self, tgt_path, ref_path):
-        tgt = Image.open(tgt_path)
-        ref = Image.open(ref_path)
-        tgt_orig = self.process.pre(tgt, "org")
-        tgt = self.process.pre(tgt, "tgt", color=self.color)
-        ref = self.process.pre(ref, "ref", color=self.color)
+    def predict(self, tgt_path, ref_path, show=False):
+        tgt_img = Image.open(tgt_path)
+        ref_img = Image.open(ref_path)
+        tgt_orig = self.process.pre(tgt_img, "org")
+        tgt = self.process.pre(tgt_img, "tgt", color=self.color)
+        ref = self.process.pre(ref_img, "ref", color=self.color)
         tgt = tgt.unsqueeze(0).to(self.device)
         ref = ref.unsqueeze(0).to(self.device)
         with torch.no_grad():
             pred = self.model(tgt, ref)[0]
             pred = self.process.post(tgt_orig, pred)
+        if show:
+            show_image(tgt_img, ref_img, pred)
         return pred
     
 class VideoColorizer:

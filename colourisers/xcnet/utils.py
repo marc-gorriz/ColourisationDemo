@@ -4,6 +4,7 @@ from torchvision.transforms import Lambda, ToTensor, Resize, Compose, ToPILImage
 from skimage.color import rgb2lab, lab2rgb
 from PIL import Image
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def ToLab():
@@ -47,3 +48,11 @@ class Process:
         pred[..., 1:] = pred[..., 1:] * 128
         pred_rgb = np.clip(lab2rgb(pred.numpy()), 0, 1)
         return Image.fromarray(np.uint8(pred_rgb * 255))
+    
+def show_image(tgt, ref, pred):
+    plt.figure(figsize=(14, 6))
+    plt.subplot(1, 4, 1); plt.title("Target"); plt.axis("off"); plt.imshow(tgt.convert("L"), cmap="gray")
+    plt.subplot(1, 4, 2); plt.title("Reference"); plt.axis("off"); plt.imshow(ref)
+    plt.subplot(1, 4, 3); plt.title("Prediction"); plt.axis("off"); plt.imshow(pred)
+    plt.subplot(1, 4, 4); plt.title("Original"); plt.axis("off"); plt.imshow(tgt)
+    plt.show()
