@@ -1,5 +1,5 @@
 import warnings
-import torch, tqdm, os
+import torch, tqdm
 from PIL import Image
 from torch.hub import load_state_dict_from_url
 
