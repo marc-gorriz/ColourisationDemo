@@ -1,5 +1,5 @@
 import warnings
-import torch, tqdm
+import torch, tqdm, os
 from PIL import Image
 from torch.hub import load_state_dict_from_url
 
@@ -73,6 +73,7 @@ class VideoColorizer:
             with torch.no_grad(): 
                 pred = self.model(tgt, ref)[0] 
             out.append(self.process.post(tgt_orig, pred))
+        print(">> Saving output video ...")
         save_video(out, "data", "pred", start=0)
         if show: display_video("data/pred")
         return out
