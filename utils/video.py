@@ -105,11 +105,11 @@ def write_video(output_path, fps=24):
         str(output_path), crf=17, vcodec='libx264'
     ).global_args('-loglevel', 'error').global_args('-y').run(capture_stdout=True)
     
-def save_video(frames, output_path, name, start=0, fill=5):
+def save_video(frames, output_path, name, start=0, fill=5, write=True):
     path = output_path + "/%s/frames" % name; mkdir(path)
     for i, f in tqdm.tqdm(enumerate(frames), total=len(frames), ascii=True, ncols=70): 
         f.save(path + "/%s.jpg" % ("%d" % (i + start)).zfill(fill))
-    write_video(output_path + "/%s" % name) 
+    if write: write_video(output_path + "/%s" % name)
 
 def display_video(video_path, height=224):
     video_path = glob.glob("%s/*.mp4" % video_path)[-1]
