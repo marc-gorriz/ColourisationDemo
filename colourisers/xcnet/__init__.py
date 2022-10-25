@@ -3,6 +3,7 @@ import warnings
 import torch
 import tqdm
 from PIL import Image
+import matplotlib.pyplot as plt
 from torch.hub import load_state_dict_from_url
 
 from .utils import Process
